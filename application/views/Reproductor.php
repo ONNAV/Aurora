@@ -45,7 +45,7 @@
 <script type="text/javascript" src="<?= base_url("template/js/jquery-1.7.2.min.js") ?>"></script>
 
 <script>
-    function listaRepro() {
+    function listaRepro(iniciar) {
         $.ajax({
             url: "<?= base_url("index.php/Reproductor/getList") ?>",
             dataType: "JSON",
@@ -57,8 +57,14 @@
             },
             success: function (d) {
                 $("#olCanciones").html(d.canciones);
-                $.getScript("<?= base_url("template/js/reproductor.js") ?>");
-                setTimeout(listaRepro(), 300000);
+                if (iniciar) {
+                    $.getScript("<?= base_url("template/js/reproductor.js") ?>");
+                } else {
+                    $.notify({
+                        message: "Lista Actualizada"
+
+                    });
+                }
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 $.notify({
@@ -79,6 +85,7 @@
     }
 
     $(document).ready(function () {
-        listaRepro();
+        listaRepro(true);
+        setInterval(listaRepro, 300000);
     });
 </script>
