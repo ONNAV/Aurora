@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
         <link rel="apple-touch-icon" sizes="76x76" href="../content/img/apple-icon.png" />
         <link rel="icon" type="image/png" href="../content/img/favicon.png" />
         <title>AURORA</title>

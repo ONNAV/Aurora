@@ -38,12 +38,14 @@ class Reproductor extends CI_Controller {
     }
 
     public function UploadDrop() {
+        header("Content-Type: charset=utf-8");
         if (!empty($_FILES)) {
-            $tempFile = $_FILES['file']['tmp_name'];          //3             
-            $fileName = strip_tags($_FILES['file']['name']);
+            $tempFile = $_FILES['file']['tmp_name'];
+            $fileName = mb_convert_encoding($_FILES['file']['name'], "UTF-8");
             if (!$this->Base->getDataWhere(Reproductor::$TBLBibliotecaMusical, array('Archivo' => $fileName, 'Origen' => 'Archivo'))) {
-                $localPath = $this->carpeta . $fileName;
+                strip_tags($localPath = $this->carpeta . $fileName);
                 if (move_uploaded_file($tempFile, $localPath)) {
+
                     $this->InfoID3($localPath, 'Archivo');
                 }
             } else {
@@ -54,17 +56,20 @@ class Reproductor extends CI_Controller {
 
     private function InfoID3($cancion, $origen) {
         $this->load->library('getid3_1.7.4/getid3.php');
-
         $getID3 = new getID3;
+        $getID3->encoding = "UTF-8";
         $audio = $getID3->analyze($cancion);
         $i = pathinfo($cancion);
         $bpm = ($audio['tags']['id3v2']['bpm'][0] > 0) ? $audio['tags']['id3v2']['bpm'][0] : 0;
-        $title = ($audio['tags']['id3v2']['title'][0] != NULL) ? $audio['tags']['id3v2']['title'][0] : $i['filename'];
-        $album = ($audio['tags']['id3v2']['album'][0] != NULL) ? $audio['tags']['id3v2']['album'][0] : 'Album Desconocido';
-        $artista = ($audio['tags']['id3v2']['artist'][0] != NULL) ? $audio['tags']['id3v2']['artist'][0] : 'Artista Desconocido';
-
-        $this->Base->InsertData(Reproductor::$TBLBibliotecaMusical, array('Artista' => $artista, 'BPM' => $bpm, 'Titulo' => $title, 'Album' => $album, 'Archivo' => $i['basename'], 'Origen' => $origen));
-        $this->output->set_content_type('application/json')->set_output(json_encode(array('error' => false, 'text' => "El archivo fue agregado correctamente", 'icon' => $this->CaritaFeliz)));
+        $title = ($audio['tags']['id3v2']['title'][0] != NULL) ? strip_tags($audio['tags']['id3v2']['title'][0]) : strip_tags($i['filename']);
+        $album = ($audio['tags']['id3v2']['album'][0] != NULL) ? strip_tags($audio['tags']['id3v2']['album'][0]) : 'Album Desconocido';
+        $artista = ($audio['tags']['id3v2']['artist'][0] != NULL) ? strip_tags($audio['tags']['id3v2']['artist'][0]) : 'Artista Desconocido';
+        log_message("USERINFO", $title);
+        if ($this->Base->InsertData(Reproductor::$TBLBibliotecaMusical, array('Artista' => $artista, 'BPM' => $bpm, 'Titulo' => strip_tags($title), 'Album' => strip_tags($album), 'Archivo' => strip_tags($i['basename']), 'Origen' => $origen)) > 0) {
+            $this->output->set_content_type('application/json')->set_output(json_encode(array('error' => false, 'text' => "El archivo fue agregado correctamente", 'icon' => $this->CaritaFeliz)));
+        } else {
+            $this->output->set_content_type('application/json')->set_output(json_encode(array('error' => true, 'text' => "Ocurrio un problema intentando registrar la cancion", 'icon' => $this->CaritaTriste)));
+        }
     }
 
     public function UploadFromURL() {
