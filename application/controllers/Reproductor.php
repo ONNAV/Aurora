@@ -40,7 +40,7 @@ class Reproductor extends CI_Controller {
     public function UploadDrop() {
         if (!empty($_FILES)) {
             $tempFile = $_FILES['file']['tmp_name'];          //3             
-            $fileName = $_FILES['file']['name'];
+            $fileName = strip_tags($_FILES['file']['name']);
             if (!$this->Base->getDataWhere(Reproductor::$TBLBibliotecaMusical, array('Archivo' => $fileName, 'Origen' => 'Archivo'))) {
                 $localPath = $this->carpeta . $fileName;
                 if (move_uploaded_file($tempFile, $localPath)) {
@@ -71,7 +71,7 @@ class Reproductor extends CI_Controller {
         $data = $this->input->post('BibliotecaMusicalStream');
         if (!$this->Base->getDataWhere(Reproductor::$TBLBibliotecaMusical, array('Origen' => $data['URL']))) {
             $url = exec('casperjs C:\SITES\CasperJS\offliberty.js --url="' . $data['URL'] . '"');
-            $cancion = $this->carpeta . $data['Titulo'] . '_-_' . $data['Artista'] . '.mp3';
+            $cancion = strip_tags($this->carpeta . $data['Titulo'] . '_-_' . $data['Artista'] . '.mp3');
             file_put_contents($cancion, fopen($url, 'r'));
             $this->EditID3($cancion, $data, true);
         } else {
