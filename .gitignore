@@ -4,7 +4,12 @@ ehthumbs.db
 
 # Folder config file
 Desktop.ini
-
+/ci_session/
+/application/logs/
+/application/config/config.php
+/application/config/database.php
+/biblioteca/*
+biblioteca/*
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
 
