@@ -64,6 +64,10 @@
                         message: "Lista Actualizada"
 
                     });
+                    $('#olCanciones li').on('click', function () {
+                        iCancionActual = $(this).index();
+                        $.fntReproducir();
+                    });
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
