@@ -38,13 +38,13 @@ class Reproductor extends CI_Controller {
     }
 
     public function UploadDrop() {
-        header("Content-Type: charset=utf-8");
+        header('Content-Type: text/html; charset=utf-8');
         if (!empty($_FILES)) {
             $tempFile = $_FILES['file']['tmp_name'];
-            $fileName = mb_convert_encoding($_FILES['file']['name'], "UTF-8");
+            $fileName = clean_string($_FILES['file']['name']);
             if (!$this->Base->getDataWhere(Reproductor::$TBLBibliotecaMusical, array('Archivo' => $fileName, 'Origen' => 'Archivo'))) {
                 strip_tags($localPath = $this->carpeta . $fileName);
-                if (move_uploaded_file($tempFile, $localPath)) {
+                if (copy($tempFile, $localPath)) {
 
                     $this->InfoID3($localPath, 'Archivo');
                 }
