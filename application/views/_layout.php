@@ -17,6 +17,9 @@
         <!--     Fonts and icons     -->
         <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
+        <script> var base = "<?= base_url() ?>"</script>
+        <script src="<?= base_url("template/js/base.js") ?>"></script>
+
     </head>
 
     <body>
@@ -102,5 +105,5 @@
     <!--    
              Material Dashboard DEMO methods, don't include it in your project! 
             <script src="content/js/demo.js"></script>-->
-    <script>type = ['','info','success','warning','danger'];</script>
+    <script>type = ['', 'info', 'success', 'warning', 'danger'];</script>
 </html>

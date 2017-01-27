@@ -211,14 +211,10 @@
             type: "post",
             data: $(this).serialize(),
             beforeSend: function () {
-                $('body').css('overflow-y', 'hidden');
-                $('body').after('<div id="fondo"></div>');
-                $('body').after('<div id="loading"><img id="cargando" style="width: 300px" src="http://media.tumblr.com/tumblr_lrnf2nIeAI1qim3b0.gif"/></div>');
+                bloqueoPantalla();
             },
             complete: function (json) {
-                $('#fondo').remove();
-                $('#loading').remove();
-                $('body').css('overflow-y', 'unset');
+                desbloquearPantalla();
                 
                 $.notify({
                     icon: json.responseJSON.icon,
