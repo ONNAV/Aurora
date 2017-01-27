@@ -10,7 +10,7 @@
                     <div id="divReproductor">
                         <div id="divInfo">
                             <div id="divLogo">
-                                
+
                             </div>
                             <div id="divInfoCancion">
                                 <label id="lblCancion"><strong>Nombre: </strong><span>-</span></label>
@@ -45,34 +45,40 @@
 <script type="text/javascript" src="<?= base_url("template/js/jquery-1.7.2.min.js") ?>"></script>
 
 <script>
-    $.ajax({
-        url: "<?= base_url("index.php/Reproductor/getList") ?>",
-        dataType: "JSON",
-        type: "POST",
-        beforeSend: function () {
+    function listaRepro() {
+        $.ajax({
+            url: "<?= base_url("index.php/Reproductor/getList") ?>",
+            dataType: "JSON",
+            type: "POST",
+            beforeSend: function () {
 //            $('body').css('overflow-y', 'hidden');
 //            $('body').after('<div id="fondo"></div>');
 //            $('body').after('<div id="loading"><img id="cargando" style="width: 300px" src="http://media.tumblr.com/tumblr_lrnf2nIeAI1qim3b0.gif"/></div>');
-        },
-        success: function (d) {
-            $("#olCanciones").html(d.canciones);
-            $.getScript("<?= base_url("template/js/reproductor.js") ?>");
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            $.notify({
-                message: xhr.responseText
+            },
+            success: function (d) {
+                $("#olCanciones").html(d.canciones);
+                $.getScript("<?= base_url("template/js/reproductor.js") ?>");
+                setTimeout(listaRepro(), 300000);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                $.notify({
+                    message: xhr.responseText
 
-            }, {
-                type: 'danger',
-                timer: 4000,
-                placement: {
-                    from: 'bottom',
-                    align: 'right'
-                }
-            });
-            //alertify.alert().set({'startMaximized': true, 'title': '<h1>Mensaje de Envio</h1>', 'message': xhr.responseText}).show();
-        }
+                }, {
+                    type: 'danger',
+                    timer: 4000,
+                    placement: {
+                        from: 'bottom',
+                        align: 'right'
+                    }
+                });
+                //alertify.alert().set({'startMaximized': true, 'title': '<h1>Mensaje de Envio</h1>', 'message': xhr.responseText}).show();
+            }
 
+        });
+    }
+
+    $(document).ready(function () {
+        listaRepro();
     });
-
 </script>

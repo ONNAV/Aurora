@@ -114,7 +114,7 @@ class Reproductor extends CI_Controller {
     }
 
     function getList() {
-        $canciones = $this->Base->getData(Reproductor::$TBLBibliotecaMusical);
+        $canciones = $this->Base->getQuery("SELECT * FROM BibliotecaMusical ORDER BY NEWID(), Titulo,Artista, BPM, Archivo, RAND(ID), Origen, Album");
         $html = '';
         foreach ($canciones as $c) {
             $ubicacion = base_url("biblioteca/$c->Archivo");
