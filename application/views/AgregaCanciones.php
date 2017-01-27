@@ -222,7 +222,7 @@
 
                 }, {
                     type: (json.responseJSON.error) ? 'danger' : 'success',
-                    timer: 4000,
+                    timer: 2500,
                     placement: {
                         from: 'bottom',
                         align: 'right'
