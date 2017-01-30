@@ -54,7 +54,7 @@ function clean_string($string) {
         "?", "'", "¡",
         "¿", "[", "^", "`", "]",
         "+", "}", "{", "¨", "´",
-        ">", "< ", ";", ",", ":", "¢", "(Www.FlowActivo.Com)", "(muzofon.com)", '(Www.FlowHoT.NeT)'), '', $string
+        ">", "< ", ";", ",", ":", "¢", "£", "¤", "¢", "(Www.FlowActivo.Com)", "(muzofon.com)", '(Www.FlowHoT.NeT)'), '', $string
     );
     return $string;
 }
