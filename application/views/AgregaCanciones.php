@@ -89,15 +89,7 @@
 <script src="http://w.soundcloud.com/player/api.js"></script>
 <script>
     $(document).ready(function () {
-        var myDropzone = new Dropzone("#frmdropzone", {maxFilesize: 50, acceptedFiles: 'audio/mp3',
-            accept: function (file, done) {
-                console.log(file.type);
-                if (file.type != 'audio/mp3') {
-                    done("Naha, you don't.");
-                } else {
-                    done();
-                }
-            }});
+        var myDropzone = new Dropzone("#frmdropzone", {maxFilesize: 50, acceptedFiles: '.mp3,.m4a'});
 
         myDropzone.on("complete", function (file, json, xhr) {
             $.notify({
@@ -215,7 +207,7 @@
             },
             complete: function (json) {
                 desbloquearPantalla();
-                
+
                 $.notify({
                     icon: json.responseJSON.icon,
                     message: json.responseJSON.text
