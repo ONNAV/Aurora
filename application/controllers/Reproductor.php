@@ -64,7 +64,7 @@ class Reproductor extends CI_Controller {
         $title = ($audio['tags']['id3v2']['title'][0] != NULL) ? strip_tags($audio['tags']['id3v2']['title'][0]) : strip_tags($i['filename']);
         $album = ($audio['tags']['id3v2']['album'][0] != NULL) ? strip_tags($audio['tags']['id3v2']['album'][0]) : 'Album Desconocido';
         $artista = ($audio['tags']['id3v2']['artist'][0] != NULL) ? strip_tags($audio['tags']['id3v2']['artist'][0]) : 'Artista Desconocido';
-        $dataCancion = $this->Base->getDataRow(Reproductor::$TBLBibliotecaMusical, array('Origen' => $origen));
+        $dataCancion = $this->Base->getDataRow(Reproductor::$TBLBibliotecaMusical, array('Origen' => $origen, 'Archivo' => strip_tags($i['basename'])));
         $repro = array('Artista' => $artista, 'BPM' => $bpm, 'Titulo' => strip_tags($title), 'Album' => strip_tags($album), 'Archivo' => strip_tags($i['basename']), 'Origen' => $origen);
         log_message("USERINFO", "ID " . $dataCancion->ID);
         if ($dataCancion->ID == NULL) {
