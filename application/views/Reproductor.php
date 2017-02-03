@@ -3,21 +3,15 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header" data-background-color="blue">
-                    <h4 class="title"></h4>
+                <div class="card-header" id="cabeceraInfo" data-background-color="blue">
+                    <h4 class="title lblCancion"><strong>Nombre: </strong><span>-</span></h4>
+                    <h4 class="title" id="lblArtista"><strong>Artista: </strong><span>-</span></h4>
+                    <h4 class="title" id="lblDuracion"><strong>Duraci&oacute;n: </strong><span>-</span></h4>
+                    <h4 class="title" id="lblEstado"><strong>Transcurrido: </strong><span>-</span></h4>
                 </div>
                 <div class="card-content">
                     <div id="divReproductor">
                         <div id="divInfo">
-                            <div id="divLogo">
-
-                            </div>
-                            <div id="divInfoCancion">
-                                <label id="lblCancion"><strong>Nombre: </strong><span>-</span></label>
-                                <label id="lblArtista"><strong>Artista: </strong><span>-</span></label>
-                                <label id="lblDuracion"><strong>Duraci&oacute;n: </strong><span>-</span></label>
-                                <label id="lblEstado"><strong>Transcurrido: </strong><span>-</span></label>
-                            </div>
                             <div style="clear: both"></div>
                         </div>
                         <div id="divControles">

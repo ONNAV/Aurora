@@ -82,7 +82,7 @@ input[type="button"].clsSeleccionado{
 #divLista{
     padding: 5px;
     overflow-x: auto;
-    height: 50%;
+    height: 300px;
     color: #777;
     font-size: 11px;
 }
@@ -115,13 +115,4 @@ input[type="button"].clsSeleccionado{
 #divLista ol li em{
     display: block;
     font-style: normal;
-}
-#divCreditos{
-    padding: 10px;
-    text-align: right;
-    font-size: 10px;
-    color: #666;
-}
-#divCreditos h1{
-    font-size: 10px;
 }

@@ -61,7 +61,7 @@ $(function () {
         objReproductor.play();
 
         //ocultamos suavemente los datos de la cancion anterior 
-        $('#divInfoCancion').find('label').stop(true.true).animate({
+        $('#cabeceraInfo').find('h4').stop(true.true).animate({
             opacity: 0
         }, function () {
             //obtenemos una instancia del elemento que contiene los datos de la cancion
@@ -71,7 +71,7 @@ $(function () {
             //duracion total
             $('#lblDuracion').find('span').text('00:00');
             //nombre de la cancion
-            $('#lblCancion').find('span').text($objContenedorCancion.find('strong').text());
+            $('.lblCancion').find('span').text($objContenedorCancion.find('strong').text());
             //artista
             $('#lblArtista').find('span').text($objContenedorCancion.find('em').text());
             //tiempo transcurrido
