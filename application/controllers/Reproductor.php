@@ -66,7 +66,7 @@ class Reproductor extends CI_Controller {
         $artista = ($audio['tags']['id3v2']['artist'][0] != NULL) ? strip_tags($audio['tags']['id3v2']['artist'][0]) : 'Artista Desconocido';
         $dataCancion = $this->Base->getDataRow(Reproductor::$TBLBibliotecaMusical, array('Origen' => $origen));
         $repro = array('Artista' => $artista, 'BPM' => $bpm, 'Titulo' => strip_tags($title), 'Album' => strip_tags($album), 'Archivo' => strip_tags($i['basename']), 'Origen' => $origen);
-        if ($dataCancion->ID > 0) {
+        if ($dataCancion->ID < 0) {
             if ($this->Base->InsertData(Reproductor::$TBLBibliotecaMusical, $repro) > 0) {
                 $this->output->set_content_type('application/json')->set_output(json_encode(array('error' => false, 'text' => "El archivo fue agregado correctamente", 'icon' => $this->CaritaFeliz)));
             } else {
