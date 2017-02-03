@@ -113,4 +113,16 @@ class Base_model extends CI_Model {
         return $this->db->field_data($tabla);
     }
 
+    function getDataRow($table, $where) {
+        $this->db->from($table);
+        $this->db->where($where);
+        $consulta = $this->db->get();
+
+        if ($consulta->num_rows() > 0) {
+            return $consulta->row();
+        } else {
+            return false;
+        }
+    }
+
 }

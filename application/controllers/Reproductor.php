@@ -64,10 +64,21 @@ class Reproductor extends CI_Controller {
         $title = ($audio['tags']['id3v2']['title'][0] != NULL) ? strip_tags($audio['tags']['id3v2']['title'][0]) : strip_tags($i['filename']);
         $album = ($audio['tags']['id3v2']['album'][0] != NULL) ? strip_tags($audio['tags']['id3v2']['album'][0]) : 'Album Desconocido';
         $artista = ($audio['tags']['id3v2']['artist'][0] != NULL) ? strip_tags($audio['tags']['id3v2']['artist'][0]) : 'Artista Desconocido';
-        if ($this->Base->InsertData(Reproductor::$TBLBibliotecaMusical, array('Artista' => $artista, 'BPM' => $bpm, 'Titulo' => strip_tags($title), 'Album' => strip_tags($album), 'Archivo' => strip_tags($i['basename']), 'Origen' => $origen)) > 0) {
-            $this->output->set_content_type('application/json')->set_output(json_encode(array('error' => false, 'text' => "El archivo fue agregado correctamente", 'icon' => $this->CaritaFeliz)));
+        $dataCancion = $this->Base->getDataRow(Reproductor::$TBLBibliotecaMusical, array('Origen' => $origen));
+        $repro = array('Artista' => $artista, 'BPM' => $bpm, 'Titulo' => strip_tags($title), 'Album' => strip_tags($album), 'Archivo' => strip_tags($i['basename']), 'Origen' => $origen);
+        if ($dataCancion->ID > 0) {
+            if ($this->Base->InsertData(Reproductor::$TBLBibliotecaMusical, $repro) > 0) {
+                $this->output->set_content_type('application/json')->set_output(json_encode(array('error' => false, 'text' => "El archivo fue agregado correctamente", 'icon' => $this->CaritaFeliz)));
+            } else {
+                $this->output->set_content_type('application/json')->set_output(json_encode(array('error' => true, 'text' => "Ocurrio un problema intentando registrar la cancion", 'icon' => $this->CaritaTriste)));
+            }
         } else {
-            $this->output->set_content_type('application/json')->set_output(json_encode(array('error' => true, 'text' => "Ocurrio un problema intentando registrar la cancion", 'icon' => $this->CaritaTriste)));
+            $repro['ID'] = $dataCancion->ID;
+            if ($this->Base->UpdateData(Reproductor::$TBLBibliotecaMusical, $repro)) {
+                $this->output->set_content_type('application/json')->set_output(json_encode(array('error' => false, 'text' => "El archivo fue actualizado correctamente", 'icon' => $this->CaritaFeliz)));
+            } else {
+                $this->output->set_content_type('application/json')->set_output(json_encode(array('error' => true, 'text' => "Ocurrio un problema intentando actualizar la cancion", 'icon' => $this->CaritaTriste)));
+            }
         }
     }
 
