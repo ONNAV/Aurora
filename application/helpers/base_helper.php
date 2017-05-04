@@ -26,7 +26,7 @@ function GetQuitarAcentos($s) {
     return $s;
 }
 
-function clean_string($string) {
+function clean_string($string, $nombreArchivo = false) {
     $string = trim($string);
     $validacionFinal = array("\\", "¨", "º", "-", "~", "#", "@", "|", "!", "\"", "·", "$", "%", "&", "/", "(", ")", "?", "'", "¡", "¿", "[", "^", "`", "]", "+", "}", "{", "¨", "´", ">", "< ", ";", ",", ":");
     $string = str_replace(
