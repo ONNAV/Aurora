@@ -12,7 +12,7 @@ class Reproductor extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('Base_model', 'Base');
+        $this->load->model('Base_model', '_Base');
         $this->load->helper('base_helper');
         $this->load->helper('icon_helper');
         $this->dirMusicaLocal();
@@ -42,7 +42,7 @@ class Reproductor extends CI_Controller {
         if (!empty($_FILES)) {
             $tempFile = $_FILES['file']['tmp_name'];
             $fileName = clean_string($_FILES['file']['name'], true);
-            if (!$this->Base->getDataWhere(Reproductor::$TBLBibliotecaMusical, array('Archivo' => $fileName, 'Origen' => 'Archivo'))) {
+            if (!$this->_Base->getDataWhere(Reproductor::$TBLBibliotecaMusical, array('Archivo' => $fileName, 'Origen' => 'Archivo'))) {
                 strip_tags($localPath = $this->carpeta . $fileName);
                 if (copy($tempFile, $localPath)) {
 
@@ -64,19 +64,19 @@ class Reproductor extends CI_Controller {
         $title = ($audio['tags']['id3v2']['title'][0] != NULL) ? strip_tags($audio['tags']['id3v2']['title'][0]) : strip_tags($i['filename']);
         $album = ($audio['tags']['id3v2']['album'][0] != NULL) ? strip_tags($audio['tags']['id3v2']['album'][0]) : 'Album Desconocido';
         $artista = ($audio['tags']['id3v2']['artist'][0] != NULL) ? strip_tags($audio['tags']['id3v2']['artist'][0]) : 'Artista Desconocido';
-        $dataCancion = $this->Base->getDataRow(Reproductor::$TBLBibliotecaMusical, array('Origen' => $origen, 'Archivo' => clean_string($i['basename'], true)));
+        $dataCancion = $this->_Base->getDataRow(Reproductor::$TBLBibliotecaMusical, array('Origen' => $origen, 'Archivo' => clean_string($i['basename'], true)));
         $repro = array('Artista' => $artista, 'BPM' => $bpm, 'Titulo' => strip_tags($title), 'Album' => strip_tags($album), 'Archivo' => clean_string($i['basename'], TRUE), 'Origen' => $origen);
         log_message("USERINFO", "ID " . $dataCancion->ID);
         if ($dataCancion->ID == NULL) {
             log_message("USERINFO", "INSERT");
-            if ($this->Base->InsertData(Reproductor::$TBLBibliotecaMusical, $repro) > 0) {
+            if ($this->_Base->InsertData(Reproductor::$TBLBibliotecaMusical, $repro) > 0) {
                 $this->output->set_content_type('application/json')->set_output(json_encode(array('error' => false, 'text' => "El archivo fue agregado correctamente", 'icon' => $this->CaritaFeliz)));
             } else {
                 $this->output->set_content_type('application/json')->set_output(json_encode(array('error' => true, 'text' => "Ocurrio un problema intentando registrar la cancion", 'icon' => $this->CaritaTriste)));
             }
         } else {
             $repro['ID'] = $dataCancion->ID;
-            if ($this->Base->UpdateData(Reproductor::$TBLBibliotecaMusical, $repro)) {
+            if ($this->_Base->UpdateData(Reproductor::$TBLBibliotecaMusical, $repro)) {
                 $this->output->set_content_type('application/json')->set_output(json_encode(array('error' => false, 'text' => "El archivo fue actualizado correctamente", 'icon' => $this->CaritaFeliz)));
             } else {
                 $this->output->set_content_type('application/json')->set_output(json_encode(array('error' => true, 'text' => "Ocurrio un problema intentando actualizar la cancion", 'icon' => $this->CaritaTriste)));
@@ -87,7 +87,7 @@ class Reproductor extends CI_Controller {
     public function UploadFromURL() {
         $data = $this->input->post('BibliotecaMusicalStream');
         $cancion = strip_tags($this->carpeta . $data['Titulo'] . '_-_' . $data['Artista'] . '.mp3');
-        if (file_exists($cancion) && !$this->Base->getDataWhere(Reproductor::$TBLBibliotecaMusical, array('Origen' => $data['URL']))) {
+        if (file_exists($cancion) && !$this->_Base->getDataWhere(Reproductor::$TBLBibliotecaMusical, array('Origen' => $data['URL']))) {
             log_message("USERINFO", 1);
             $url = exec('casperjs C:\SITES\CasperJS\offliberty.js --url="' . $data['URL'] . '"');
             file_put_contents($cancion, fopen($url, 'r'));
@@ -137,7 +137,7 @@ class Reproductor extends CI_Controller {
     }
 
     function getList() {
-        $canciones = $this->Base->getQuery("SELECT * FROM BibliotecaMusical ORDER BY NEWID(), Titulo,Artista, BPM, Archivo, RAND(ID), Origen, Album");
+        $canciones = $this->_Base->getQuery("SELECT * FROM BibliotecaMusical ORDER BY NEWID(), Titulo,Artista, BPM, Archivo, RAND(ID), Origen, Album");
         $html = '';
         foreach ($canciones as $c) {
             $ubicacion = base_url("biblioteca/$c->Archivo");
