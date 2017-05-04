@@ -28,6 +28,7 @@ function GetQuitarAcentos($s) {
 
 function clean_string($string) {
     $string = trim($string);
+    $validacionFinal = array("\\", "¨", "º", "-", "~", "#", "@", "|", "!", "\"", "·", "$", "%", "&", "/", "(", ")", "?", "'", "¡", "¿", "[", "^", "`", "]", "+", "}", "{", "¨", "´", ">", "< ", ";", ",", ":");
     $string = str_replace(
             array('á', 'à', 'ä', 'â', 'ª', 'Á', 'À', 'Â', 'Ä'), array('a', 'a', 'a', 'a', 'a', 'A', 'A', 'A', 'A'), $string
     );
@@ -43,18 +44,13 @@ function clean_string($string) {
     $string = str_replace(
             array('ú', 'ù', 'ü', 'û', 'Ú', 'Ù', 'Û', 'Ü'), array('u', 'u', 'u', 'u', 'U', 'U', 'U', 'U'), $string
     );
-    $string = str_replace(
-            array('ñ', 'Ñ', 'ç', 'Ç'), array('n', 'N', 'c', 'C',), $string
-    );
+    if ($nombreArchivo) {
+        array_push($validacionFinal, " ");
+        $string = str_replace(array('ñ', 'Ñ', 'ç', 'Ç'), array('n', 'N', 'c', 'C'), $string);
+    }
     //Esta parte se encarga de eliminar cualquier caracter extraño
-    $string = str_replace(
-            array("\\", "¨", "º", "~",
-        "#", "@", "|", "!", "\"",
-        "·", "$", "%", "&", "/",
-        "?", "'", "¡",
-        "¿", "[", "^", "`", "]",
-        "+", "}", "{", "¨", "´",
-        ">", "< ", ";", ",", ":", "¢", "£", "¤", "¢", "(Www.FlowActivo.Com)", "(muzofon.com)", '(Www.FlowHoT.NeT)'), '', $string
-    );
+    array_push($validacionFinal, "(Www.FlowActivo.Com)", "(muzofon.com)", '(Www.FlowHoT.NeT)', 'WWW.ELGENERO.COM');
+
+    $string = str_replace($validacionFinal, '', $string);
     return $string;
 }

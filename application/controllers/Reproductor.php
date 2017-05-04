@@ -41,7 +41,7 @@ class Reproductor extends CI_Controller {
         header('Content-Type: text/html; charset=utf-8');
         if (!empty($_FILES)) {
             $tempFile = $_FILES['file']['tmp_name'];
-            $fileName = clean_string($_FILES['file']['name']);
+            $fileName = clean_string($_FILES['file']['name'], true);
             if (!$this->Base->getDataWhere(Reproductor::$TBLBibliotecaMusical, array('Archivo' => $fileName, 'Origen' => 'Archivo'))) {
                 strip_tags($localPath = $this->carpeta . $fileName);
                 if (copy($tempFile, $localPath)) {
@@ -64,8 +64,8 @@ class Reproductor extends CI_Controller {
         $title = ($audio['tags']['id3v2']['title'][0] != NULL) ? strip_tags($audio['tags']['id3v2']['title'][0]) : strip_tags($i['filename']);
         $album = ($audio['tags']['id3v2']['album'][0] != NULL) ? strip_tags($audio['tags']['id3v2']['album'][0]) : 'Album Desconocido';
         $artista = ($audio['tags']['id3v2']['artist'][0] != NULL) ? strip_tags($audio['tags']['id3v2']['artist'][0]) : 'Artista Desconocido';
-        $dataCancion = $this->Base->getDataRow(Reproductor::$TBLBibliotecaMusical, array('Origen' => $origen, 'Archivo' => strip_tags($i['basename'])));
-        $repro = array('Artista' => $artista, 'BPM' => $bpm, 'Titulo' => strip_tags($title), 'Album' => strip_tags($album), 'Archivo' => strip_tags($i['basename']), 'Origen' => $origen);
+        $dataCancion = $this->Base->getDataRow(Reproductor::$TBLBibliotecaMusical, array('Origen' => $origen, 'Archivo' => clean_string($i['basename'], true)));
+        $repro = array('Artista' => $artista, 'BPM' => $bpm, 'Titulo' => strip_tags($title), 'Album' => strip_tags($album), 'Archivo' => clean_string($i['basename'], TRUE), 'Origen' => $origen);
         log_message("USERINFO", "ID " . $dataCancion->ID);
         if ($dataCancion->ID == NULL) {
             log_message("USERINFO", "INSERT");
