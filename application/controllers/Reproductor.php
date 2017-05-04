@@ -86,7 +86,7 @@ class Reproductor extends CI_Controller {
 
     public function UploadFromURL() {
         $data = $this->input->post('BibliotecaMusicalStream');
-        $cancion = strip_tags($this->carpeta . $data['Titulo'] . '_-_' . $data['Artista'] . '.mp3');
+        $cancion = clean_string($this->carpeta . $data['Titulo'] . ' - ' . $data['Artista'] . '.mp3', true);
         if (file_exists($cancion) && !$this->_Base->getDataWhere(Reproductor::$TBLBibliotecaMusical, array('Origen' => $data['URL']))) {
             log_message("USERINFO", 1);
             $url = exec('casperjs C:\SITES\CasperJS\offliberty.js --url="' . $data['URL'] . '"');
