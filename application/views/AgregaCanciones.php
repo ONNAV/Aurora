@@ -160,7 +160,7 @@
             var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/;
             var match = url.match(regExp);
             if (match && match[2].length == 11) {
-                $('#soundcloud_widget').attr('src', 'https://www.youtube.com/embed/' + match[2] + '?autoplay=1&enablejsapi=1');
+                $('#soundcloud_widget').attr('src', 'https://www.youtube.com/embed/' + match[2] + '?autoplay=0&enablejsapi=1');
                 $("#soundcloud_widget").show();
             } else {
                 alert('not valid');
