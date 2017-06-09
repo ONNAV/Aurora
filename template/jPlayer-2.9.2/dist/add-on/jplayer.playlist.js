@@ -249,7 +249,7 @@
 			var self = this;
 
 			// Wrap the <li> contents in a <div>
-			var listItem = "<li><div class='song'>";
+			var listItem = "<li class='song'><div>";
 
 			// Create remove control
                         // ON_COMMENT
