@@ -61,3 +61,7 @@ function base64_to_jpeg($data, $output_file) {
     $data = base64_decode($data);
     file_put_contents($output_file, $data);
 }
+
+function getRandomNumber($min = 0, $max = 10) {
+    return rand($min, $max);
+}
