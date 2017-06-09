@@ -54,3 +54,10 @@ function clean_string($string, $nombreArchivo = false) {
     $string = str_replace($validacionFinal, '', $string);
     return $string;
 }
+
+function base64_to_jpeg($data, $output_file) {
+    list($type, $data) = explode(';', $data);
+    list(, $data) = explode(',', $data);
+    $data = base64_decode($data);
+    file_put_contents($output_file, $data);
+}

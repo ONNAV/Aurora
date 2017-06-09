@@ -16,6 +16,7 @@ class Reproductor extends CI_Controller {
         $this->load->helper('base_helper');
         $this->load->helper('icon_helper');
         $this->dirMusicaLocal();
+        $this->dirMusicaLocal('/covers/');
     }
 
     function index() {
@@ -45,7 +46,6 @@ class Reproductor extends CI_Controller {
             if (!$this->_Base->getDataWhere(Reproductor::$TBLBibliotecaMusical, array('Archivo' => $fileName, 'Origen' => 'Archivo'))) {
                 strip_tags($localPath = $this->carpeta . $fileName);
                 if (copy($tempFile, $localPath)) {
-
                     $this->InfoID3($localPath, 'Archivo');
                 }
             } else {
@@ -64,8 +64,20 @@ class Reproductor extends CI_Controller {
         $title = ($audio['tags']['id3v2']['title'][0] != NULL) ? strip_tags($audio['tags']['id3v2']['title'][0]) : strip_tags($i['filename']);
         $album = ($audio['tags']['id3v2']['album'][0] != NULL) ? strip_tags($audio['tags']['id3v2']['album'][0]) : 'Album Desconocido';
         $artista = ($audio['tags']['id3v2']['artist'][0] != NULL) ? strip_tags($audio['tags']['id3v2']['artist'][0]) : 'Artista Desconocido';
+
+        $mime = $audio['id3v2']['APIC'][0]['image_mime'];
+        $cover_data = $audio['id3v2']['APIC'][0]['data'];
+        $cover = NULL;
+        $imageinfo = array();
+        if ($imagechunkcheck = getid3_lib::GetDataImageSize($cover_data, $imageinfo)) {
+            $src = 'data:' . $mime . ';base64,' . base64_encode($cover_data);
+            $nombreCover = clean_string($album . $title, TRUE) . ".png";
+            base64_to_jpeg($src, ("biblioteca/covers/$nombreCover"));
+            $cover = $nombreCover;
+        }
+
         $dataCancion = $this->_Base->getDataRow(Reproductor::$TBLBibliotecaMusical, array('Origen' => $origen, 'Archivo' => clean_string($i['basename'], true)));
-        $repro = array('Artista' => $artista, 'BPM' => $bpm, 'Titulo' => strip_tags($title), 'Album' => strip_tags($album), 'Archivo' => clean_string($i['basename'], TRUE), 'Origen' => $origen);
+        $repro = array('Artista' => $artista, 'BPM' => $bpm, 'Titulo' => strip_tags($title), 'Album' => strip_tags($album), 'Archivo' => clean_string($i['basename'], TRUE), 'Origen' => $origen, 'Cover' => $cover);
         log_message("USERINFO", "ID " . $dataCancion->ID);
         if ($dataCancion->ID == NULL) {
             log_message("USERINFO", "INSERT");
@@ -144,6 +156,21 @@ class Reproductor extends CI_Controller {
             $html .= "<li rel='$ubicacion'> <strong>$c->Titulo</strong> <em>$c->Artista</em> </li>";
         }
         $this->output->set_content_type('application/json')->set_output(json_encode(array('canciones' => $html)));
+    }
+
+    function getList2() {
+        $canciones = $this->_Base->getQuery("SELECT * FROM BibliotecaMusical ORDER BY NEWID(), Titulo,Artista, BPM, Archivo, RAND(ID), Origen, Album");
+        $html = '';
+        $data = array();
+        foreach ($canciones as $c) {
+            if (file_exists("biblioteca/$c->Archivo")) {
+                $ubicacion = base_url("biblioteca/$c->Archivo");
+                $cover = (file_exists(("biblioteca/covers/$c->Cover")) && !empty($c->Cover)) ? base_url("biblioteca/covers/$c->Cover") : base_url("template/gif/Marcianito.gif");
+                $html .= "<li rel='$ubicacion'> <strong>$c->Titulo</strong> <em>$c->Artista</em> </li>";
+                $data[] = array('title' => $c->Titulo, 'artist' => $c->Artista, 'mp3' => $ubicacion, 'oga' => $ubicacion, 'poster' => $cover);
+            }
+        }
+        $this->output->set_content_type('application/json')->set_output(json_encode(array('canciones' => $data)));
     }
 
 }
