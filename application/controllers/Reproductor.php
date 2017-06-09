@@ -165,7 +165,7 @@ class Reproductor extends CI_Controller {
         foreach ($canciones as $c) {
             if (file_exists("biblioteca/$c->Archivo")) {
                 $ubicacion = base_url("biblioteca/$c->Archivo");
-                $cover = (file_exists(("biblioteca/covers/$c->Cover")) && !empty($c->Cover)) ? base_url("biblioteca/covers/$c->Cover") : base_url("template/gif/cover/" . getRandomNumber(1, 4) . ".gif");
+                $cover = (file_exists(("biblioteca/covers/$c->Cover")) && !empty($c->Cover)) ? base_url("biblioteca/covers/$c->Cover") : base_url("template/gif/cover/" . getRandomNumber(1, 7) . ".gif");
                 $html .= "<li rel='$ubicacion'> <strong>$c->Titulo</strong> <em>$c->Artista</em> </li>";
                 $data[] = array('title' => $c->Titulo, 'artist' => $c->Artista, 'mp3' => $ubicacion, 'oga' => $ubicacion, 'poster' => $cover);
             }
