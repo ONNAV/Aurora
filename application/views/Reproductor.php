@@ -144,7 +144,7 @@
                     .change(function () {
                         var filter = $(this).val();
                         if (filter) {
-                            $(list).find(".jp-playlist-item:not(:Contains(" + filter + "))").parent().slideUp();
+                            $(list).find(".jp-playlist-item:not(:Contains(" + filter + "))").parent().parent().slideUp();
                             $(list).find(".jp-playlist-item:Contains(" + filter + ")").parent().slideDown();
                         } else {
                             $(list).find(".song").slideDown();
