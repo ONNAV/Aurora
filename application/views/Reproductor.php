@@ -8,6 +8,7 @@
 <script type="text/javascript">
 //<![CDATA[
     $(document).ready(function () {
+
         $.ajax({
             url: "<?= site_url("Reproductor/getList2") ?>",
             dataType: "JSON",
@@ -100,7 +101,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6" id="containercanciones">
             <div class="jp_container_N">
                 <div class="jp-type-playlist">
                     <div class="jp-playlist">
@@ -115,4 +116,9 @@
     </div>
 </div>
 <script type="text/javascript" src="<?= base_url("template/js/jquery-1.7.2.min.js") ?>"></script>
-
+<script type="text/javascript" src="<?= base_url() ?>template/plugins/slimScroll/jquery.slimscroll.min.js?<?= $_SESSION['VersionJs'] ?>"></script>
+<script>
+    $("#containercanciones").slimScroll({
+        height: 650
+    });
+</script>
