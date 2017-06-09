@@ -73,7 +73,7 @@ class Reproductor extends CI_Controller {
             $src = 'data:' . $mime . ';base64,' . base64_encode($cover_data);
             $nombreCover = clean_string($album . $title, TRUE) . ".png";
             base64_to_jpeg($src, ("biblioteca/covers/$nombreCover"));
-            $cover = $nombreCover;
+            $cover = (filesize("biblioteca/covers/$nombreCover") > 1) ? $nombreCover : NULL;
         }
 
         $dataCancion = $this->_Base->getDataRow(Reproductor::$TBLBibliotecaMusical, array('Origen' => $origen, 'Archivo' => clean_string($i['basename'], true)));
