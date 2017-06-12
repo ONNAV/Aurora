@@ -93,6 +93,7 @@
                                             <button class="jp-repeat" role="button" tabindex="0">repeat</button>
                                             <button class="jp-shuffle" role="button" tabindex="0">shuffle</button>
                                             <button class="jp-full-screen" role="button" tabindex="0">full screen</button>
+                                            <a role="button" tabindex="0" id="downmp3" download alt="Descargar Cancion"><i class="material-icons">file_download</i></a>
                                         </div>
                                     </div>
                                     <div class="jp-details">
@@ -140,7 +141,7 @@
 <script type="text/javascript" src="<?= base_url() ?>template/plugins/slimScroll/jquery.slimscroll.min.js?<?= $_SESSION['VersionJs'] ?>"></script>
 <script>
     $("#containercanciones").slimScroll({
-        height: 650
+        height: 550
     });
 
 
