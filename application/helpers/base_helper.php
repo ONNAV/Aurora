@@ -46,7 +46,7 @@ function clean_string($string, $nombreArchivo = false) {
     );
     if ($nombreArchivo) {
         array_push($validacionFinal, " ");
-        $string = str_replace(array('ñ', 'Ñ', 'ç', 'Ç'), array('n', 'N', 'c', 'C'), $string);
+        $string = str_replace(array('ñ', 'Ñ', 'ç', 'Ç', 'ƒ'), array('n', 'N', 'c', 'C', ''), $string);
     }
     //Esta parte se encarga de eliminar cualquier caracter extraño
     array_push($validacionFinal, "(Www.FlowActivo.Com)", "(muzofon.com)", '(Www.FlowHoT.NeT)', 'WWW.ELGENERO.COM');
