@@ -77,10 +77,10 @@ class Reproductor extends CI_Controller {
         }
 
         $dataCancion = $this->_Base->getDataRow(Reproductor::$TBLBibliotecaMusical, array('Origen' => $origen, 'Archivo' => clean_string($i['basename'], true)));
-        $repro = array('Artista' => $artista, 'BPM' => $bpm, 'Titulo' => strip_tags($title), 'Album' => strip_tags($album), 'Archivo' => clean_string($i['basename'], TRUE), 'Origen' => $origen, 'Cover' => $cover);
-        log_message("USERINFO", "ID " . $dataCancion->ID);
+        $repro = array('Artista' => clearMarcasInternet($artista), 'BPM' => $bpm, 'Titulo' => clearMarcasInternet($title), 'Album' => clearMarcasInternet($album), 'Archivo' => clean_string($i['basename'], TRUE), 'Origen' => $origen, 'Cover' => $cover);
+        //log_message("USERINFO", "ID " . $dataCancion->ID);
         if ($dataCancion->ID == NULL) {
-            log_message("USERINFO", "INSERT");
+            //log_message("USERINFO", "INSERT");
             if ($this->_Base->InsertData(Reproductor::$TBLBibliotecaMusical, $repro) > 0) {
                 $this->output->set_content_type('application/json')->set_output(json_encode(array('error' => false, 'text' => "El archivo fue agregado correctamente", 'icon' => $this->CaritaFeliz)));
             } else {

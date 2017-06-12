@@ -55,6 +55,13 @@ function clean_string($string, $nombreArchivo = false) {
     return $string;
 }
 
+function clearMarcasInternet($string) {
+    $string = strtoupper($string);
+    $validacionFinal = array("(WWW.FLOWACTIVO.COM)", "(MUZOFON.COM)", '(WWW.FLOWHOT.NET)', '(WWW.ELGENERO.COM)', 'WWW.ELGENERO.COM', 'WWW.FLOWACTIVO.COM', "MUZOFON.COM", 'WWW.FLOWHOT.NET');
+    str_replace($validacionFinal, '', $string);
+    return str_replace($validacionFinal, '', $string);
+}
+
 function base64_to_jpeg($data, $output_file) {
     list($type, $data) = explode(';', $data);
     list(, $data) = explode(',', $data);
