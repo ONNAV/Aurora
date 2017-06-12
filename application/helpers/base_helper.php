@@ -56,10 +56,10 @@ function clean_string($string, $nombreArchivo = false) {
 }
 
 function clearMarcasInternet($string) {
-    $string = strtoupper($string);
-    $validacionFinal = array("(WWW.FLOWACTIVO.COM)", "(MUZOFON.COM)", '(WWW.FLOWHOT.NET)', '(WWW.ELGENERO.COM)', 'WWW.ELGENERO.COM', 'WWW.FLOWACTIVO.COM', "MUZOFON.COM", 'WWW.FLOWHOT.NET');
+    $string = strtolower($string);
+    $validacionFinal = array("(www.flowactivo.com)", "(muzofon.com)", '(www.flowhot.net)', '(www.elgenero.com)', 'www.elgenero.com', 'www.flowactivo.com', "muzofon.com", 'www.flowhot.net');
     str_replace($validacionFinal, '', $string);
-    return str_replace($validacionFinal, '', $string);
+    return ucwords(str_replace($validacionFinal, '', $string));
 }
 
 function base64_to_jpeg($data, $output_file) {
