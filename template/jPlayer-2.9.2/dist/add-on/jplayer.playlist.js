@@ -413,8 +413,9 @@
         select: function (index) {
             index = (index < 0) ? this.original.length + index : index; // Negative index relates to end of array.
             if (0 <= index && index < this.playlist.length) {
-                $("#NombreCancion").html("Estas Escuchando: " + this.playlist[this.current].title);
-                $("#ArtistaCancion").html(this.playlist[this.current].artist);
+                var number = (this.current + 1);
+                $("#NombreCancion").html('<i class="material-icons">&#xE405;</i> Estas Escuchando: ' + this.playlist[number].title);
+                $("#ArtistaCancion").html(this.playlist[number].artist);
                 this.current = index;
                 this._highlight(index);
                 $(this.cssSelector.jPlayer).jPlayer("setMedia", this.playlist[this.current]);
