@@ -141,7 +141,7 @@
 <script type="text/javascript" src="<?= base_url() ?>template/plugins/slimScroll/jquery.slimscroll.min.js?<?= $_SESSION['VersionJs'] ?>"></script>
 <script>
     $("#containercanciones").slimScroll({
-        height: 550
+        height: 500
     });
 
 
