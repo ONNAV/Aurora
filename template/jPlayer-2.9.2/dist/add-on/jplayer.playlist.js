@@ -334,6 +334,8 @@
                 $("#NombreCancion").html('<i class="material-icons">&#xE405;</i> Estas Escuchando: ' + this.playlist[index].title);
                 $("#ArtistaCancion").html(this.playlist[index].artist);
                 $("#downmp3").attr("href", this.playlist[index].mp3);
+                $(".jp-playlist-current").focus();
+
                 $(this.cssSelector.playlist + " .jp-playlist-current").removeClass("jp-playlist-current");
                 $(this.cssSelector.playlist + " li:nth-child(" + (index + 1) + ")").addClass("jp-playlist-current").find(".jp-playlist-item").addClass("jp-playlist-current");
                 // $(this.cssSelector.details + " li").html("<span class='jp-title'>" + this.playlist[index].title + "</span>" + (this.playlist[index].artist ? " <span class='jp-artist'>by " + this.playlist[index].artist + "</span>" : ""));
