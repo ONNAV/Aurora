@@ -331,6 +331,8 @@
         },
         _highlight: function (index) {
             if (this.playlist.length && index !== undefined) {
+                $("#NombreCancion").html('<i class="material-icons">&#xE405;</i> Estas Escuchando: ' + this.playlist[index].title);
+                $("#ArtistaCancion").html(this.playlist[index].artist);
                 $(this.cssSelector.playlist + " .jp-playlist-current").removeClass("jp-playlist-current");
                 $(this.cssSelector.playlist + " li:nth-child(" + (index + 1) + ")").addClass("jp-playlist-current").find(".jp-playlist-item").addClass("jp-playlist-current");
                 // $(this.cssSelector.details + " li").html("<span class='jp-title'>" + this.playlist[index].title + "</span>" + (this.playlist[index].artist ? " <span class='jp-artist'>by " + this.playlist[index].artist + "</span>" : ""));
@@ -413,9 +415,6 @@
         select: function (index) {
             index = (index < 0) ? this.original.length + index : index; // Negative index relates to end of array.
             if (0 <= index && index < this.playlist.length) {
-                var number = (this.current + 1);
-                $("#NombreCancion").html('<i class="material-icons">&#xE405;</i> Estas Escuchando: ' + this.playlist[number].title);
-                $("#ArtistaCancion").html(this.playlist[number].artist);
                 this.current = index;
                 this._highlight(index);
                 $(this.cssSelector.jPlayer).jPlayer("setMedia", this.playlist[this.current]);
