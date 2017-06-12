@@ -58,8 +58,8 @@ function clean_string($string, $nombreArchivo = false) {
 function clearMarcasInternet($string) {
     $string = strtolower($string);
     $validacionFinal = array("(www.flowactivo.com)", "(muzofon.com)", '(www.flowhot.net)', '(www.elgenero.com)', 'www.elgenero.com', 'www.flowactivo.com', "muzofon.com", 'www.flowhot.net');
-    str_replace($validacionFinal, '', $string);
-    return ucwords(str_replace($validacionFinal, '', $string));
+    $string = str_replace($validacionFinal, '', $string);
+    return ucwords($string);
 }
 
 function base64_to_jpeg($data, $output_file) {
