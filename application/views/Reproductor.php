@@ -110,7 +110,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6" id="containercanciones">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header" data-background-color="blue">
                     <h4 class="title"><i class="material-icons">library_music</i> Lista de Canciones</h4>
@@ -122,7 +122,7 @@
                         </form>
                     </div>
 
-                    <div class="jp_container_N">
+                    <div class="jp_container_N" id="containercanciones">
                         <div class="jp-type-playlist">
                             <div class="jp-playlist">
                                 <ul>
